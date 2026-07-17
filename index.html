@@ -1397,21 +1397,20 @@
     document.querySelectorAll('#statusGroup .chip').forEach(b=>b.classList.toggle('active', b.dataset.status===state.status));
   }
 
-  /* ---------------- draft save/load (persistent storage) ---------------- */
-  async function saveDraft(){
+  /* ---------------- draft save/load (browser localStorage) ---------------- */
+  function saveDraft(){
     try{
-      const result = await localStorage.set('draft', JSON.stringify(state), false);
-      if(result){ toast('Draft saved', 'success'); }
-      else { toast('Could not save draft', 'error'); }
+      localStorage.setItem('mineinvo_draft', JSON.stringify(state));
+      toast('Draft saved', 'success');
     }catch(err){
       toast('Could not save draft', 'error');
     }
   }
-  async function loadDraft(){
+  function loadDraft(){
     try{
-      const result = await localStorage.get('draft', false);
-      if(result && result.value){
-        const loaded = JSON.parse(result.value);
+      const raw = localStorage.getItem('mineinvo_draft');
+      if(raw){
+        const loaded = JSON.parse(raw);
         state = Object.assign(state, loaded);
         prevGrand = 0;
         hydrateFormFromState();
@@ -1428,21 +1427,20 @@
   document.getElementById('btnSave').addEventListener('click', saveDraft);
   document.getElementById('btnLoad').addEventListener('click', loadDraft);
 
-  /* ---------------- saved clients (persistent storage) ---------------- */
+  /* ---------------- saved clients (browser localStorage) ---------------- */
   function escapeAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
 
-  async function getSavedClients(){
+  function getSavedClients(){
     try{
-      const result = await localStorage.get('clients', false);
-      if(result && result.value) return JSON.parse(result.value);
-      return [];
+      const raw = localStorage.getItem('mineinvo_clients');
+      return raw ? JSON.parse(raw) : [];
     }catch(err){
       return [];
     }
   }
-  async function setSavedClients(list){
+  function setSavedClients(list){
     try{
-      await localStorage.set('clients', JSON.stringify(list), false);
+      localStorage.setItem('mineinvo_clients', JSON.stringify(list));
       return true;
     }catch(err){
       return false;
