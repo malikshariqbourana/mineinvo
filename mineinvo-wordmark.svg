@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 140" width="560" height="140">
+  <defs>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="45%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#3730A3"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="0%" y1="0%" x2="60%" y2="70%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Sora:wght@800&display=swap');
+      .word{ font-family:'Sora','Segoe UI',sans-serif; font-weight:800; font-size:56px; fill:#1F2937; letter-spacing:-1px; }
+      .tag{ font-family:'Segoe UI',sans-serif; font-weight:600; font-size:16px; fill:#6B7280; letter-spacing:2px; text-transform:uppercase; }
+    </style>
+  </defs>
+
+  <g transform="translate(0,10)">
+    <rect width="120" height="120" rx="32" fill="url(#badgeGrad)"/>
+    <rect width="120" height="120" rx="32" fill="url(#gloss)"/>
+    <g transform="translate(21,16)">
+      <path d="M21 0C17.69 0 15 2.69 15 6v60c0 3.31 2.69 6 6 6h54c3.31 0 6-2.69 6-6V24l-24-24H21z"
+            fill="rgba(255,255,255,0.16)" stroke="#FFFFFF" stroke-width="4.2" stroke-linejoin="round"/>
+      <path d="M57 0v18c0 3.31 2.69 6 6 6h18" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linejoin="round"/>
+      <path d="M28.8 45.6h38.4M28.8 58.8h22.8" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round"/>
+      <circle cx="28.8" cy="28.2" r="3.6" fill="#FFFFFF"/>
+    </g>
+  </g>
+
+  <text x="140" y="80" class="word">MineInvo</text>
+  <text x="142" y="108" class="tag">Invoice Generator</text>
+</svg>

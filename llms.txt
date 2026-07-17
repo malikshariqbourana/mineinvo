@@ -1,0 +1,17 @@
+# MineInvo
+
+> MineInvo is a free, browser-based invoice generator. It requires no signup or account. Users enter business and client details, add line items with tax and discounts, and can download the result as a PDF, print it, or email it directly.
+
+MineInvo runs entirely client-side — no invoice data is sent to or stored on a server. Optional local drafts are kept per-session. The tool supports multiple currencies, multiple invoice templates, and logo uploads.
+
+## Pages
+
+- [Home](https://mineinvo.pages.dev/): The invoice generator tool itself — business/client forms, line items, live preview, PDF/print/email export.
+- [How to Write an Invoice](https://mineinvo.pages.dev/how-to-write-an-invoice.html): A step-by-step guide covering what to include on an invoice, numbering, payment terms, and common mistakes.
+- [About](https://mineinvo.pages.dev/about.html): What MineInvo is, who it's for, and contact information.
+- [Privacy Policy](https://mineinvo.pages.dev/privacy.html): How data, cookies, and analytics are handled.
+- [Terms of Service](https://mineinvo.pages.dev/terms.html): Terms governing use of the tool.
+
+## Notes
+
+MineInvo is free for personal and commercial use. It does not require an account. It is not an accounting or tax advisory service — it is a formatting and calculation tool for creating invoice documents.
