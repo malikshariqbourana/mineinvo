@@ -541,6 +541,21 @@
 
   .modal-overlay.preview-modal .modal-box{max-width:640px;max-height:88vh;overflow:auto;padding:18px;}
 
+  .client-item{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:11px 13px;border:1px solid var(--border);border-radius:12px;
+    background:var(--surface-2);cursor:pointer;transition:all .18s ease;
+  }
+  .client-item:hover{border-color:var(--primary);background:var(--primary-light);}
+  .client-item .ci-name{font-weight:700;font-size:13.5px;color:var(--ink);}
+  .client-item .ci-meta{font-size:11.5px;color:var(--ink-faint);margin-top:2px;}
+  .client-item .ci-del{
+    width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--ink-faint);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s ease;
+  }
+  .client-item .ci-del:hover{background:#FEF2F2;color:var(--danger);}
+  [data-theme="dark"] .client-item .ci-del:hover{background:#3B1414;}
+
   .theme-toggle{
     width:40px;height:40px;border-radius:12px;border:1.5px solid var(--border-strong);
     background:var(--surface);display:flex;align-items:center;justify-content:center;
@@ -654,12 +669,24 @@
           <div class="card-icon"><svg class="icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
           <div><h3>Bill to</h3><span>Your client's details</span></div>
         </div>
-        <svg class="icon chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button class="btn btn-sm btn-ghost" id="btnSavedClients" type="button" title="Saved clients" aria-label="Open saved clients list" onclick="event.stopPropagation();">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Clients
+          </button>
+          <svg class="icon chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
       </div>
       <div class="card-body">
         <div class="field"><label>Client name</label><input type="text" id="cliName" placeholder="Acme Corporation"></div>
         <div class="field"><label>Address</label><textarea id="cliAddress" placeholder="500 Market St, San Francisco" style="min-height:52px;"></textarea></div>
         <div class="field"><label>Email</label><input type="email" id="cliEmail" placeholder="accounts@acme.com"></div>
+        <div style="display:flex;justify-content:flex-end;">
+          <button class="btn btn-sm" id="btnSaveClient" type="button" title="Save this client for later">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+            Save this client
+          </button>
+        </div>
       </div>
     </div>
 
@@ -895,6 +922,19 @@
       </button>
     </div>
     <div id="invoicePaperMobileHolder"></div>
+  </div>
+</div>
+
+<!-- saved clients modal -->
+<div class="modal-overlay" id="clientsModal">
+  <div class="modal-box" style="max-width:440px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <h3 style="margin:0;">Saved clients</h3>
+      <button class="btn btn-icon btn-sm btn-ghost" id="closeClientsModal" aria-label="Close saved clients">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="clientsList" style="display:grid;gap:8px;max-height:340px;overflow-y:auto;"></div>
   </div>
 </div>
 
@@ -1387,6 +1427,105 @@
   }
   document.getElementById('btnSave').addEventListener('click', saveDraft);
   document.getElementById('btnLoad').addEventListener('click', loadDraft);
+
+  /* ---------------- saved clients (persistent storage) ---------------- */
+  function escapeAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+  async function getSavedClients(){
+    try{
+      const result = await window.storage.get('clients', false);
+      if(result && result.value) return JSON.parse(result.value);
+      return [];
+    }catch(err){
+      return [];
+    }
+  }
+  async function setSavedClients(list){
+    try{
+      await window.storage.set('clients', JSON.stringify(list), false);
+      return true;
+    }catch(err){
+      return false;
+    }
+  }
+
+  async function saveCurrentClient(){
+    const name = state.client.name.trim();
+    if(!name){
+      toast('Add a client name first', 'error');
+      return;
+    }
+    const list = await getSavedClients();
+    const existingIdx = list.findIndex(c => c.name.toLowerCase() === name.toLowerCase());
+    const entry = { name, address: state.client.address, email: state.client.email };
+    if(existingIdx > -1) list[existingIdx] = entry;
+    else list.push(entry);
+    const ok = await setSavedClients(list);
+    toast(ok ? 'Client saved' : 'Could not save client', ok ? 'success' : 'error');
+  }
+
+  async function renderClientsList(){
+    const host = document.getElementById('clientsList');
+    const list = await getSavedClients();
+    if(!list.length){
+      host.innerHTML = '<div class="empty-hint">No saved clients yet. Fill in a client\'s details and click "Save this client" to add one here.</div>';
+      return;
+    }
+    host.innerHTML = list.map((c, i) => `
+      <div class="client-item" data-idx="${i}">
+        <div>
+          <div class="ci-name">${escapeHtml(c.name)}</div>
+          <div class="ci-meta">${escapeHtml(c.email || c.address || '')}</div>
+        </div>
+        <button class="ci-del" data-del-idx="${i}" title="Delete" aria-label="Delete ${escapeAttr(c.name)}">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('btnSaveClient').addEventListener('click', saveCurrentClient);
+
+  document.getElementById('btnSavedClients').addEventListener('click', async ()=>{
+    await renderClientsList();
+    document.getElementById('clientsModal').classList.add('open');
+  });
+  document.getElementById('closeClientsModal').addEventListener('click', ()=>{
+    document.getElementById('clientsModal').classList.remove('open');
+  });
+  document.getElementById('clientsModal').addEventListener('click', (e)=>{
+    if(e.target.id === 'clientsModal') document.getElementById('clientsModal').classList.remove('open');
+  });
+
+  document.getElementById('clientsList').addEventListener('click', async (e)=>{
+    const delBtn = e.target.closest('[data-del-idx]');
+    if(delBtn){
+      e.stopPropagation();
+      const idx = Number(delBtn.dataset.delIdx);
+      const list = await getSavedClients();
+      list.splice(idx, 1);
+      await setSavedClients(list);
+      renderClientsList();
+      toast('Client removed', 'info');
+      return;
+    }
+    const item = e.target.closest('.client-item');
+    if(item){
+      const idx = Number(item.dataset.idx);
+      const list = await getSavedClients();
+      const c = list[idx];
+      if(!c) return;
+      state.client.name = c.name || '';
+      state.client.address = c.address || '';
+      state.client.email = c.email || '';
+      document.getElementById('cliName').value = state.client.name;
+      document.getElementById('cliAddress').value = state.client.address;
+      document.getElementById('cliEmail').value = state.client.email;
+      renderPaper();
+      document.getElementById('clientsModal').classList.remove('open');
+      toast('Client loaded', 'success');
+    }
+  });
 
   document.getElementById('btnDuplicate').addEventListener('click', ()=>{
     state.invNumber = genInvoiceNumber();
