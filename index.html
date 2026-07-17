@@ -10,6 +10,11 @@
 <meta name="robots" content="index, follow">
 <meta name="author" content="MineInvo">
 <meta name="theme-color" content="#4F46E5">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MineInvo">
 <link rel="canonical" href="https://mineinvo.pages.dev/">
 
 <!-- Google tag (gtag.js) — deferred to avoid delaying initial render -->
@@ -1497,6 +1502,16 @@
   }
   init();
 })();
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {
+        // Fails silently if unsupported/blocked; the app works fine without it.
+      });
+    });
+  }
 </script>
 </body>
 </html>
