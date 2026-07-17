@@ -1433,7 +1433,7 @@
 
   async function getSavedClients(){
     try{
-      const result = await window.storage.get('clients', false);
+      const result = await localStorage.get('clients', false);
       if(result && result.value) return JSON.parse(result.value);
       return [];
     }catch(err){
@@ -1442,7 +1442,7 @@
   }
   async function setSavedClients(list){
     try{
-      await window.storage.set('clients', JSON.stringify(list), false);
+      await localStorage.set('clients', JSON.stringify(list), false);
       return true;
     }catch(err){
       return false;
