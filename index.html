@@ -1400,7 +1400,7 @@
   /* ---------------- draft save/load (persistent storage) ---------------- */
   async function saveDraft(){
     try{
-      const result = await window.storage.set('draft', JSON.stringify(state), false);
+      const result = await localStorage.set('draft', JSON.stringify(state), false);
       if(result){ toast('Draft saved', 'success'); }
       else { toast('Could not save draft', 'error'); }
     }catch(err){
@@ -1409,7 +1409,7 @@
   }
   async function loadDraft(){
     try{
-      const result = await window.storage.get('draft', false);
+      const result = await localStorage.get('draft', false);
       if(result && result.value){
         const loaded = JSON.parse(result.value);
         state = Object.assign(state, loaded);
