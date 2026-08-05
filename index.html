@@ -12,6 +12,7 @@
 <meta name="theme-color" content="#4F46E5">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MineInvo">
@@ -788,6 +789,10 @@
       </div>
       <div class="card-body">
         <textarea id="notesArea" style="min-height:90px;" placeholder="Thank you for your business. Payment due within 14 days via bank transfer."></textarea>
+        <div class="field">
+          <label>Payment link (optional)</label>
+          <input type="text" id="paymentLink" placeholder="https://paypal.me/yourname or Stripe link">
+        </div>
       </div>
     </div>
 
@@ -852,14 +857,63 @@
 
 <section id="siteContent" style="max-width:900px;margin:0 auto;padding:20px 28px 60px;">
   <h2 style="font-family:'Sora',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;">How MineInvo works</h2>
-  <p style="color:var(--ink-soft);font-size:14.5px;line-height:1.7;max-width:640px;margin:0 0 28px;">
+  <p style="color:var(--ink-soft);font-size:14.5px;line-height:1.7;max-width:640px;margin:0 0 16px;">
     MineInvo runs entirely in your browser — fill in your business and client details, add line items, and your invoice
     updates live in the preview on the right. When it looks right, download it as a PDF, print it, or email it straight
     to your client. No account, no signup, and no cost.
   </p>
   <p style="color:var(--ink-soft);font-size:14.5px;line-height:1.7;max-width:640px;margin:0 0 28px;">
-    New to invoicing? Read our <a href="/how-to-write-an-invoice.html" style="color:var(--primary);font-weight:600;text-decoration:none;">step-by-step guide to writing an invoice</a> — what to include, payment terms explained, and common mistakes to avoid. Not sure whether you need an invoice or a receipt? Check our <a href="/invoice-vs-receipt.html" style="color:var(--primary);font-weight:600;text-decoration:none;">invoice vs receipt guide</a>.
+    Because everything happens client-side, your invoice details never pass through a server — they exist only in your
+    browser until you choose to export or send them. That also means MineInvo works the same whether you're sending
+    your first invoice or your five-hundredth, with no per-invoice limits, watermarks, or feature paywalls.
   </p>
+
+  <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin:0 0 14px;">What you can do with it</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:30px;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;">
+      <div style="font-weight:700;font-size:14px;margin-bottom:5px;">Multiple templates</div>
+      <div style="color:var(--ink-soft);font-size:13px;line-height:1.6;">Switch between Modern, Minimal, and Bold visual styles without re-entering any data.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;">
+      <div style="font-weight:700;font-size:14px;margin-bottom:5px;">Automatic calculations</div>
+      <div style="color:var(--ink-soft);font-size:13px;line-height:1.6;">Line item totals, tax, and discounts calculate live as you type — no manual arithmetic.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;">
+      <div style="font-weight:700;font-size:14px;margin-bottom:5px;">Saved clients</div>
+      <div style="color:var(--ink-soft);font-size:13px;line-height:1.6;">Store repeat clients once and pick them from a list instead of retyping their details each time.</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;">
+      <div style="font-weight:700;font-size:14px;margin-bottom:5px;">Works offline</div>
+      <div style="color:var(--ink-soft);font-size:13px;line-height:1.6;">Install MineInvo as an app on desktop or mobile and keep using it without an internet connection.</div>
+    </div>
+  </div>
+
+  <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin:0 0 14px;">Invoicing guides</h2>
+  <p style="color:var(--ink-soft);font-size:14.5px;line-height:1.7;max-width:640px;margin:0 0 16px;">
+    New to invoicing, or want a quick refresher on getting paid on time? These guides cover the practical side of invoicing that the tool itself doesn't — written from common questions freelancers and small businesses run into.
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:30px;">
+    <a href="/how-to-write-an-invoice.html" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;text-decoration:none;">
+      <div style="font-weight:700;font-size:14px;color:var(--ink);margin-bottom:5px;">How to Write an Invoice</div>
+      <div style="color:var(--ink-faint);font-size:12.5px;">What to include, step by step, and mistakes to avoid</div>
+    </a>
+    <a href="/invoice-vs-receipt.html" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;text-decoration:none;">
+      <div style="font-weight:700;font-size:14px;color:var(--ink);margin-bottom:5px;">Invoice vs Receipt</div>
+      <div style="color:var(--ink-faint);font-size:12.5px;">What's the difference, and when you need each one</div>
+    </a>
+    <a href="/invoice-numbering-guide.html" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;text-decoration:none;">
+      <div style="font-weight:700;font-size:14px;color:var(--ink);margin-bottom:5px;">Invoice Numbering</div>
+      <div style="color:var(--ink-faint);font-size:12.5px;">Best practices and systems that actually scale</div>
+    </a>
+    <a href="/net-30-vs-net-15.html" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;text-decoration:none;">
+      <div style="font-weight:700;font-size:14px;color:var(--ink);margin-bottom:5px;">Net 30 vs Net 15</div>
+      <div style="color:var(--ink-faint);font-size:12.5px;">Payment terms explained, and how to choose</div>
+    </a>
+    <a href="/late-invoice-payment-follow-up.html" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;text-decoration:none;">
+      <div style="font-weight:700;font-size:14px;color:var(--ink);margin-bottom:5px;">Late Invoice Follow-Up</div>
+      <div style="color:var(--ink-faint);font-size:12.5px;">A timeline and templates for chasing overdue payment</div>
+    </a>
+  </div>
 
   <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin:0 0 14px;">Frequently asked questions</h2>
   <div style="display:grid;gap:14px;">
@@ -869,7 +923,7 @@
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;">
       <div style="font-weight:700;font-size:14.5px;margin-bottom:5px;">Where is my invoice data stored?</div>
-      <div style="color:var(--ink-soft);font-size:13.5px;line-height:1.6;">Everything happens in your own browser. Saved drafts are stored locally to your session — we don't operate a server that reads or stores the content of your invoices.</div>
+      <div style="color:var(--ink-soft);font-size:13.5px;line-height:1.6;">Everything happens in your own browser. Saved drafts and clients are stored locally to your browser — we don't operate a server that reads or stores the content of your invoices.</div>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;">
       <div style="font-weight:700;font-size:14.5px;margin-bottom:5px;">Can I use MineInvo for my business?</div>
@@ -961,7 +1015,8 @@
     items: [ freshItem() ],
     discountType: 'percent',
     discountValue: 0,
-    notes: 'Thank you for your business. Payment is due within 14 days via bank transfer.'
+    notes: 'Thank you for your business. Payment is due within 14 days via bank transfer.',
+    paymentLink: ''
   };
 
   let prevGrand = 0;
@@ -1173,6 +1228,7 @@
       </div>
 
       ${state.notes ? `<div class="paper-notes"><div class="label">Notes</div><p>${escapeHtml(state.notes)}</p></div>` : ''}
+      ${state.paymentLink ? `<div class="paper-notes" style="border-top:none;padding-top:0;margin-top:${state.notes ? '10' : '26'}px;"><a href="${escapeHtml(state.paymentLink)}" target="_blank" rel="noopener" style="display:inline-block;background:${state.template==='bold' ? 'var(--warm)' : (state.template==='minimal' ? '#111827' : 'var(--primary)')};color:#fff;font-weight:700;font-size:12.5px;padding:10px 18px;border-radius:10px;text-decoration:none;">Pay this invoice →</a></div>` : ''}
       <div class="paper-foot">Generated with MineInvo</div>
     `;
     const paper = document.getElementById('invoicePaper');
@@ -1222,6 +1278,7 @@
   document.getElementById('invDate').addEventListener('input', e=>{ state.invDate = e.target.value; renderPaper(); });
   document.getElementById('dueDate').addEventListener('input', e=>{ state.dueDate = e.target.value; renderPaper(); });
   document.getElementById('notesArea').addEventListener('input', e=>{ state.notes = e.target.value; renderPaper(); });
+  document.getElementById('paymentLink').addEventListener('input', e=>{ state.paymentLink = e.target.value.trim(); renderPaper(); });
   document.getElementById('currencySel').addEventListener('change', e=>{ state.currency = e.target.value; renderTotals(); renderItems(); renderPaper(); });
   document.getElementById('discValue').addEventListener('input', e=>{ state.discountValue = e.target.value; renderTotals(); renderPaper(); });
 
@@ -1369,7 +1426,7 @@
       theme: state.theme, template:'modern', status:'unpaid', currency:'USD', logo:null,
       biz:{name:'',address:'',email:'',phone:''}, client:{name:'',address:'',email:''},
       invNumber: genInvoiceNumber(), invDate: todayISO(), dueDate: addDaysISO(14),
-      items:[freshItem()], discountType:'percent', discountValue:0, notes:''
+      items:[freshItem()], discountType:'percent', discountValue:0, notes:'', paymentLink:''
     };
     prevGrand = 0;
     hydrateFormFromState();
@@ -1392,6 +1449,7 @@
     document.getElementById('currencySel').value = state.currency;
     document.getElementById('discValue').value = state.discountValue;
     document.getElementById('notesArea').value = state.notes;
+    document.getElementById('paymentLink').value = state.paymentLink || '';
     document.querySelectorAll('#discSeg button').forEach(b=>b.classList.toggle('active', b.dataset.type===state.discountType));
     document.querySelectorAll('#tplGroup .chip').forEach(b=>b.classList.toggle('active', b.dataset.tpl===state.template));
     document.querySelectorAll('#statusGroup .chip').forEach(b=>b.classList.toggle('active', b.dataset.status===state.status));

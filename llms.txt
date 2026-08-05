@@ -9,6 +9,9 @@ MineInvo runs entirely client-side — no invoice data is sent to or stored on a
 - [Home](https://mineinvo.pages.dev/): The invoice generator tool itself — business/client forms, line items, live preview, PDF/print/email export.
 - [How to Write an Invoice](https://mineinvo.pages.dev/how-to-write-an-invoice.html): A step-by-step guide covering what to include on an invoice, numbering, payment terms, and common mistakes.
 - [Invoice vs Receipt](https://mineinvo.pages.dev/invoice-vs-receipt.html): Explains the difference between an invoice and a receipt, and when to use each.
+- [Invoice Numbering Guide](https://mineinvo.pages.dev/invoice-numbering-guide.html): Best practices and systems for numbering invoices consistently.
+- [Net 30 vs Net 15](https://mineinvo.pages.dev/net-30-vs-net-15.html): Explains common invoice payment terms and how to choose the right ones.
+- [Late Invoice Payment Follow-Up](https://mineinvo.pages.dev/late-invoice-payment-follow-up.html): A follow-up timeline and message templates for chasing overdue invoices.
 - [About](https://mineinvo.pages.dev/about.html): What MineInvo is, who it's for, and contact information.
 - [Privacy Policy](https://mineinvo.pages.dev/privacy.html): How data, cookies, and analytics are handled.
 - [Terms of Service](https://mineinvo.pages.dev/terms.html): Terms governing use of the tool.
